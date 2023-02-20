@@ -47,8 +47,8 @@ export class Inventory extends Component {
 
   renderInputs() {
     return (
-      <Form inline>
-        <Form.Label htmlFor="userId" srOnly>
+      <Form >
+        <Form.Label htmlFor="userId">
           User Id:
         </Form.Label>
         <Form.Control

@@ -7,12 +7,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
-
-ReactDOM.render(
-  <BrowserRouter basename={baseUrl}>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("root")
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <BrowserRouter basename={baseUrl}>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
