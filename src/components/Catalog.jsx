@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Col, Container, Row, Table, Button } from "react-bootstrap";
 import ItemModal from "./form/ItemModal";
 import GrantItemModal from "./form/GrantItemModal";
+import { getAllCatalogItems } from "../services/CatalogService";
 
 export class Catalog extends Component {
   static displayName = Catalog.name;
@@ -11,8 +12,10 @@ export class Catalog extends Component {
     this.state = { items: [], loading: true, loadedSuccess: false };
   }
 
-  componentDidMount() {
-    this.populateItems();
+  async componentDidMount() {
+    // this.populateItems();
+    const catalogItems = await getAllCatalogItems();
+    this.setState({items: catalogItems, loading: false, loadedSuccess: true});
   }
 
   async populateItems() {
