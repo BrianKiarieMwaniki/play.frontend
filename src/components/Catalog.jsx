@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Col, Container, Row, Table, Button } from "react-bootstrap";
 import ItemModal from "./form/ItemModal";
 import GrantItemModal from "./form/GrantItemModal";
-import { getAllCatalogItems } from "../services/CatalogService";
+import { getAllCatalogItemsAsync } from "../services/CatalogService";
 
 export class Catalog extends Component {
   static displayName = Catalog.name;
@@ -14,26 +14,14 @@ export class Catalog extends Component {
 
   async componentDidMount() {
     // this.populateItems();
-    const catalogItems = await getAllCatalogItems();
-    this.setState({items: catalogItems, loading: false, loadedSuccess: true});
-  }
-
-  async populateItems() {
-    fetch(`${window.CATALOG_ITEMS_API_URL}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((returnedItems) =>
-        this.setState({
-          items: returnedItems,
-          loading: false,
-          loadedSuccess: true,
-        })
-      )
-      .catch((err) => {
-        console.log(err);
-        this.setState({ items: [], loading: false, loadedSuccess: false });
+    const catalogItems = await getAllCatalogItemsAsync();
+    if (catalogItems) {
+      this.setState({
+        items: catalogItems,
+        loading: false,
+        loadedSuccess: true,
       });
+    }
   }
 
   addItemToState = (item) => {

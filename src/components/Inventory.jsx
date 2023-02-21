@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Col, Container, Row, Table, Button, Form } from "react-bootstrap";
+import {getAllInventoryItemsByUserIdAsync} from "../services/InventoryService";
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -30,19 +31,17 @@ export class Inventory extends Component {
       loading: true,
       loadedSuccess: false,
     });
-    fetch(`${window.INVENTORY_ITEMS_API_URL}?userId=${this.state.userId}`)
-      .then((response) => response.json())
-      .then((returnedItems) =>
-        this.setState({
-          items: returnedItems,
-          loading: false,
-          loadedSuccess: true,
-        })
-      )
-      .catch((err) => {
-        console.log(err);
-        this.setState({ items: [], loading: false, loadedSuccess: false });
+    
+    const inventoryItems = await getAllInventoryItemsByUserIdAsync(this.state.userId);
+
+    if(inventoryItems)
+    {
+      this.setState({
+        items: inventoryItems,
+        loading: false,
+        loadedSuccess: true,
       });
+    }
   }
 
   renderInputs() {
