@@ -1,8 +1,8 @@
-import axios from "axios";
+import httpService from "./httpService";
 
 export async function getAllInventoryItemsByUserIdAsync(userId) {
   try {
-    const { data } = await axios.get(
+    const { data } = await httpService.get(
       `${window.INVENTORY_ITEMS_API_URL}?userId=${userId}`
     );
     return data;
